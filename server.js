@@ -1,4 +1,5 @@
 const express = require("express");
+const dotenv = require("dotenv");
 const cors = require("cors");
 const { syncDatabase } = require("./models/index");
 const categoryRoutes = require("./routes/categoryRoutes");
@@ -11,8 +12,25 @@ app.use(express.json());
 app.use("/categories", categoryRoutes);
 app.use("/products", productRoutes);
 
-syncDatabase();
+app.use((req, res, next) => {
+  res.status(404).json({ error: "Route not found" });
+});
 
-app.listen(process.env.PORT, () =>
-  console.log(`Server running on port ${process.env.PORT}`)
-);
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: "Internal server error" });
+});
+
+const startServer = async () => {
+  try {
+    await syncDatabase();
+    app.listen(process.env.PORT || 3000, () => {
+      console.log(`Server running on port ${process.env.PORT || 3000}`);
+    });
+  } catch (error) {
+    console.error("Database sync failed", error);
+    process.exit(1);
+  }
+};
+
+startServer();
