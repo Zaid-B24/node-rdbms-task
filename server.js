@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+require("pg");
 const cors = require("cors");
 const { syncDatabase } = require("./models/index");
 const categoryRoutes = require("./routes/categoryRoutes");
