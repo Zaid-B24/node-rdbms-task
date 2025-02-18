@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "build":"echo 'No build needed fro backend"
+    "build": "echo 'No build needed fro backend"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mysql2": "^3.12.0",
+    "pg": "^8.13.3",
     "sequelize": "^6.37.5"
   },
   "devDependencies": {
