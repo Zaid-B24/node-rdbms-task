@@ -6,8 +6,15 @@ const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/productRoutes");
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception Shutting down...");
+  console.error(err.name, err.message);
+  process.exit(1);
+});
 
 app.get("/", (req, res) => {
   res.status(200).json("Welcome, your app is working well");
