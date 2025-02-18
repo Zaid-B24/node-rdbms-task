@@ -9,6 +9,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.status(200).json("Welcome, your app is working well");
+});
+
 app.use("/categories", categoryRoutes);
 app.use("/products", productRoutes);
 
