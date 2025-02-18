@@ -32,16 +32,22 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Internal server error" });
 });
 
-const startServer = async () => {
-  try {
-    await syncDatabase();
-    app.listen(process.env.PORT || 3000, () => {
-      console.log(`Server running on port ${process.env.PORT || 3000}`);
-    });
-  } catch (error) {
-    console.error("Database sync failed", error);
-    process.exit(1);
-  }
-};
+// For local development only
+if (process.env.NODE_ENV !== "production") {
+  const startServer = async () => {
+    try {
+      await syncDatabase();
+      app.listen(process.env.PORT || 3000, () => {
+        console.log(`Server running on port ${process.env.PORT || 3000}`);
+      });
+    } catch (error) {
+      console.error("Database sync failed", error);
+      process.exit(1);
+    }
+  };
 
-startServer();
+  startServer();
+}
+
+// This is important for Vercel
+module.exports = app;
